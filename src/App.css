@@ -1,0 +1,34 @@
+* {
+  box-sizing: border-box;
+  text-decoration: none;
+  /* border: 1px solid red; */
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* @media screen and (min-width: 768px) {
+  * {
+    font-size: 18px;
+  }
+} */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+button:active,
+a:active {
+  transform: scale(0.95); /* Slightly reduce size when clicked */
+}
+
+button {
+  cursor: pointer;
+}
