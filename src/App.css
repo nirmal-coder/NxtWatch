@@ -23,7 +23,6 @@ a {
   color: inherit;
 }
 
-
 button:active,
 a:active {
   transform: scale(0.95); /* Slightly reduce size when clicked */
