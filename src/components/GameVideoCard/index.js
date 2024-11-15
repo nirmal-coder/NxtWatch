@@ -5,6 +5,7 @@ import {
   ThumbnailImg,
   ChannelDetails,
   ViewsContainer,
+  Title,
 } from './styledComponent'
 
 const GameVideoCard = props => {
@@ -21,7 +22,7 @@ const GameVideoCard = props => {
               <ThumbnailImg src={thumbnailUrl} alt="video thumbnail" />
               <ChannelDetails isDark={isDark}>
                 <div>
-                  <p>{title}</p>
+                  <Title isDark={isDark}>{title}</Title>
                   <ViewsContainer>
                     <p>{`${viewCount} Watching Worldwide`}</p>
                   </ViewsContainer>

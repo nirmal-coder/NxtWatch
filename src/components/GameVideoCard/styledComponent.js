@@ -39,10 +39,6 @@ export const ChannelDetails = styled.div`
   div {
     color: ${props => (props.isDark ? textColorDark : textColorlight)};
   }
-  div p:nth-of-type(1) {
-    color: #64748b;
-    font-size: 12px;
-  }
   p {
     font-weight: 500;
   }
@@ -61,4 +57,9 @@ export const ViewsContainer = styled.div`
     color: #64748b;
     margin-right: 10px;
   }
+`
+export const Title = styled.p`
+  color: ${props => (props.isDark ? textColorDark : textColorlight)};
+  font-size: 14px;
+  font-weight: 500;
 `

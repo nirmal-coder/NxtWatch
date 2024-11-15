@@ -15,7 +15,7 @@ import Theme from './context'
 import './App.css'
 
 class App extends Component {
-  state = {isDark: false, saved: []}
+  state = {isDark: false, saved: [], liked: [], disliked: []}
 
   changeTheme = () => {
     this.setState(prev => ({
@@ -35,8 +35,32 @@ class App extends Component {
     }))
   }
 
+  addLiked = obj => {
+    this.setState(prev => ({
+      liked: [...prev.liked, obj],
+    }))
+  }
+
+  removeLiked = id => {
+    this.setState(prev => ({
+      liked: [...prev.liked].filter(each => each.id !== id),
+    }))
+  }
+
+  addDisliked = obj => {
+    this.setState(prev => ({
+      disliked: [...prev.disliked, obj],
+    }))
+  }
+
+  removeDisliked = id => {
+    this.setState(prev => ({
+      disliked: [...prev.disliked].filter(each => each.id !== id),
+    }))
+  }
+
   render() {
-    const {isDark, saved} = this.state
+    const {isDark, saved, liked, disliked} = this.state
 
     return (
       <>
@@ -45,8 +69,14 @@ class App extends Component {
             isDark,
             changeTheme: this.changeTheme,
             saved,
+            liked,
+            disliked,
             addSavedItem: this.addSavedItem,
             decreaseSavedItem: this.decreaseSavedItem,
+            addLiked: this.addLiked,
+            removeLiked: this.removeLiked,
+            addDisliked: this.addDisliked,
+            removeDisliked: this.removeDisliked,
           }}
         >
           <Switch>

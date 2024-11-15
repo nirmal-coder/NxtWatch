@@ -8,20 +8,20 @@ export const Container = styled.li`
   margin: 10px 10px;
   display: flex;
   flex-direction: column;
-  @media screen and (min-width: 768px) {
-    width: 250px;
-  }
+
+  padding: 10px;
 `
+
 export const ThumbnailImg = styled.img`
   width: 100%;
+  object-fit: scale-down;
 `
 export const ChannelDetails = styled.div`
   display: flex;
   margin-top: 10px;
-
   img {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     margin-top: 25px;
     margin-right: 16px;
   }
@@ -29,21 +29,26 @@ export const ChannelDetails = styled.div`
     color: ${props => (props.isDark ? textColorDark : textColorlight)};
   }
   p {
-    font-weight: 600;
+    font-weight: 500;
   }
-`
-export const Title = styled.p`
-  color: ${props => (props.isDark ? textColorDark : textColorlight)};
-  font-size: 14px;
-  font-weight: 500;
+  @media screen and (min-width: 768px) {
+    img {
+      display: none;
+    }
+  }
 `
 export const ViewsContainer = styled.div`
   display: flex;
   margin-top: -25px;
   align-items: center;
   p {
-    font-size: 14px;
-    color: #7e858e;
+    font-size: 12px;
+    color: #64748b;
     margin-right: 10px;
   }
+`
+export const Title = styled.p`
+  color: ${props => (props.isDark ? textColorDark : textColorlight)};
+  font-size: ;
+  font-weight: 500;
 `

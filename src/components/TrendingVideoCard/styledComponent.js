@@ -4,7 +4,7 @@ const textColorDark = '#f1f5f9'
 const textColorlight = ' #181818'
 
 export const Container = styled.li`
-  width: 96%;
+  width: 100%;
   margin: 10px 10px;
   display: flex;
   flex-direction: column;
@@ -24,10 +24,6 @@ export const ThumbnailImg = styled.img`
 export const ChannelDetails = styled.div`
   display: flex;
   margin-top: 10px;
-  h3 {
-    font-size: 14px;
-    font-weight: 500;
-  }
   img {
     width: 40px;
     height: 40px;
@@ -36,10 +32,6 @@ export const ChannelDetails = styled.div`
   }
   div {
     color: ${props => (props.isDark ? textColorDark : textColorlight)};
-  }
-  div p:nth-of-type(1) {
-    color: #64748b;
-    font-size: 12px;
   }
   p {
     font-weight: 500;
@@ -59,4 +51,9 @@ export const ViewsContainer = styled.div`
     color: #64748b;
     margin-right: 10px;
   }
+`
+export const Title = styled.p`
+  color: ${props => (props.isDark ? textColorDark : textColorlight)};
+  font-size: 14px;
+  font-weight: 500;
 `

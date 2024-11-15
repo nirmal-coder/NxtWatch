@@ -9,7 +9,7 @@ import {
   Title,
 } from './styledComponent'
 
-const VideoCard = props => {
+const RecommentedVideoCard = props => {
   const {videoData} = props
   const {channel, id, title, thumbnailUrl, viewCount, publishedAt} = videoData
 
@@ -26,7 +26,7 @@ const VideoCard = props => {
             <Container isDark={isDark}>
               <ThumbnailImg src={thumbnailUrl} alt="video thumbnail" />
               <ChannelDetails isDark={isDark}>
-                <img src={channel.profileImageUrl} alt="channel logo" />
+                <img src={channel.profileImageUrl} alt={channel.name} />
                 <div>
                   <Title isDark={isDark}>{title}</Title>
                   <p>{channel.name}</p>
@@ -44,4 +44,4 @@ const VideoCard = props => {
   )
 }
 
-export default VideoCard
+export default RecommentedVideoCard

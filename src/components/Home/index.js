@@ -68,6 +68,7 @@ class Home extends Component {
           viewCount: each.view_count,
           publishedAt: each.published_at,
         }))
+
         this.setState({videoData: updatedList, status: dataStatus.fetched})
       } else {
         this.setState({status: dataStatus.notFetched})
@@ -80,7 +81,6 @@ class Home extends Component {
   changeSearch = event => {
     const {value} = event.target
     this.setState({search: value})
-    console.log(event.type)
     if (event.key === 'Enter') {
       this.getHomeData()
     }
@@ -180,6 +180,7 @@ class Home extends Component {
         <Theme.Consumer>
           {value => {
             const {isDark} = value
+
             return (
               <MainContainer data-testid="home" isDark={isDark}>
                 <Header />

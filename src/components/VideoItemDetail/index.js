@@ -17,12 +17,15 @@ import {
   LoaderContainer,
   LikesContainer,
   Button,
+  Title,
   ChannelContainer,
+  RecommendedVideos,
 } from './styledComponent'
 
 import Theme from '../../context'
 import Header from '../Header'
 import SlideBar from '../SlideBar'
+import RecommentedVideo from '../RecommentedVideo'
 
 const dataStatus = {
   inPrograss: 'INPROGRESS',
@@ -34,11 +37,6 @@ class VideoItemDetail extends Component {
   state = {
     videoData: {},
     status: dataStatus.inPrograss,
-    buttonObj: {
-      like: false,
-      dislike: false,
-      save: false,
-    },
   }
 
   componentDidMount() {
@@ -47,6 +45,19 @@ class VideoItemDetail extends Component {
       top: 0,
       behavior: 'smooth', // Enables smooth scrolling
     })
+  }
+
+  componentDidUpdate(prevProps) {
+    const {match} = this.props
+    const {params} = match
+    const {id} = params
+    if (prevProps.match.params.id !== id) {
+      this.getVideoDetail()
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      })
+    }
   }
 
   getVideoDetail = async () => {
@@ -90,51 +101,43 @@ class VideoItemDetail extends Component {
     }
   }
 
-  onChangeLike = () => {
-    const {buttonObj} = this.state
-    if (buttonObj.like === false) {
-      this.setState(prev => ({
-        buttonObj: {
-          ...prev.buttonObj,
-          like: !prev.buttonObj.like,
-          dislike: false,
-        },
-      }))
+  onChangeLike = (addLiked, liked, removeLiked, removeDisliked) => {
+    const {videoData} = this.state
+    const {id} = videoData
+    const isLiked =
+      liked.length !== 0 ? liked.some(each => each.id === id) : false
+    if (isLiked) {
+      removeLiked(videoData.id)
     } else {
-      this.setState(prev => ({
-        buttonObj: {...prev.buttonObj, like: !prev.buttonObj.like},
-      }))
+      addLiked(videoData)
+      removeDisliked(videoData.id)
     }
   }
 
-  onChangeDislike = () => {
-    const {buttonObj} = this.state
-    if (buttonObj.dislike === false) {
-      this.setState(prev => ({
-        buttonObj: {
-          ...prev.buttonObj,
-          dislike: !prev.buttonObj.dislike,
-          like: false,
-        },
-      }))
+  onChangeDislike = (addDisliked, removeDisliked, disliked, removeLiked) => {
+    const {videoData} = this.state
+    const {id} = videoData
+    const isDisliked =
+      disliked.length !== 0 ? disliked.some(each => each.id === id) : false
+
+    if (isDisliked) {
+      removeDisliked(videoData.id)
     } else {
-      this.setState(prev => ({
-        buttonObj: {...prev.buttonObj, dislike: !prev.buttonObj.like},
-      }))
+      addDisliked(videoData)
+      removeLiked(videoData.id)
     }
   }
 
-  onChangeSave = (decreaseSavedItem, addSavedItem) => {
-    const {buttonObj, videoData} = this.state
+  onChangeSave = (decreaseSavedItem, addSavedItem, saved) => {
+    const {videoData} = this.state
+    const isSaved =
+      saved.length !== 0 ? saved.some(each => each.id === videoData.id) : false
 
-    if (buttonObj.save) {
+    if (isSaved) {
       decreaseSavedItem(videoData.id)
     } else {
       addSavedItem(videoData)
     }
-    this.setState(prev => ({
-      buttonObj: {...prev.buttonObj, save: !prev.buttonObj.save},
-    }))
   }
 
   renderLoader = () => (
@@ -155,8 +158,8 @@ class VideoItemDetail extends Component {
     </Theme.Consumer>
   )
 
-  renderVideoDetail = saved => {
-    const {videoData, status, buttonObj} = this.state
+  renderVideoDetail = (saved, liked, disliked) => {
+    const {videoData, status} = this.state
     const {
       id,
       title,
@@ -168,6 +171,10 @@ class VideoItemDetail extends Component {
     } = videoData
     const isSaved =
       saved.length !== 0 ? saved.some(each => each.id === id) : false
+    const isLiked =
+      liked.length !== 0 ? liked.some(each => each.id === id) : false
+    const isDisliked =
+      disliked.length !== 0 ? disliked.some(each => each.id === id) : false
 
     const date = formatDistanceToNow(new Date(publishedAt), {addSuffix: false})
 
@@ -177,65 +184,96 @@ class VideoItemDetail extends Component {
       return (
         <Theme.Consumer>
           {value => {
-            const {isDark, addSavedItem, decreaseSavedItem} = value
+            const {
+              isDark,
+              addSavedItem,
+              decreaseSavedItem,
+              addLiked,
+              removeLiked,
+              addDisliked,
+              removeDisliked,
+            } = value
             return (
-              <VideosListContainer isDark={isDark}>
-                <VideoPlayerContainer>
-                  <ReactPlayer
-                    url={videoUrl}
-                    controls
-                    width="100%"
-                    height="100%"
-                  />
-                </VideoPlayerContainer>
-                <p>{title}</p>
-                <ViewsAndLikesContainer>
-                  <ViewsContainer isDark={isDark}>
-                    <p>{`${viewCount} views`}</p>
-                    <p>{`. ${changeFormat} ago`}</p>
-                  </ViewsContainer>
-                  <LikesContainer>
-                    <Button
-                      isSelected={buttonObj.like}
-                      isDark={isDark}
-                      type="button"
-                      onClick={this.onChangeLike}
-                    >
-                      <BiLike />
-                      Like
-                    </Button>
-                    <Button
-                      isSelected={buttonObj.dislike}
-                      isDark={isDark}
-                      type="button"
-                      onClick={this.onChangeDislike}
-                    >
-                      <BiDislike />
-                      Dislike
-                    </Button>
-                    <Button
-                      isSelected={buttonObj.save || isSaved}
-                      isDark={isDark}
-                      type="button"
-                      onClick={() =>
-                        this.onChangeSave(decreaseSavedItem, addSavedItem)
-                      }
-                    >
-                      <RiPlayListAddFill />
-                      <p>{buttonObj.save || isSaved ? 'saved' : 'save'}</p>
-                    </Button>
-                  </LikesContainer>
-                </ViewsAndLikesContainer>
-                <hr />
-                <ChannelContainer isDark={isDark}>
-                  <img src={channel.profileImageUrl} alt="channel logo" />
-                  <div>
-                    <p>{channel.name}</p>
-                    <p>{`${channel.subscriberCount} subscribers`}</p>
-                  </div>
-                </ChannelContainer>
-                <p>{description}</p>
-              </VideosListContainer>
+              <>
+                <VideosListContainer isDark={isDark}>
+                  <VideoPlayerContainer>
+                    <ReactPlayer
+                      url={videoUrl}
+                      controls
+                      width="100%"
+                      height="100%"
+                    />
+                  </VideoPlayerContainer>
+                  <Title isDark={isDark}>{title}</Title>
+                  <ViewsAndLikesContainer>
+                    <ViewsContainer isDark={isDark}>
+                      <p>{`${viewCount} views`}</p>
+                      <p>{`. ${changeFormat} ago`}</p>
+                    </ViewsContainer>
+                    <LikesContainer>
+                      <Button
+                        isSelected={isLiked}
+                        isDark={isDark}
+                        type="button"
+                        onClick={() =>
+                          this.onChangeLike(
+                            addLiked,
+                            liked,
+                            removeLiked,
+                            removeDisliked,
+                          )
+                        }
+                      >
+                        <BiLike />
+                        Like
+                      </Button>
+                      <Button
+                        isSelected={isDisliked}
+                        isDark={isDark}
+                        type="button"
+                        onClick={() =>
+                          this.onChangeDislike(
+                            addDisliked,
+                            removeDisliked,
+                            disliked,
+                            removeLiked,
+                          )
+                        }
+                      >
+                        <BiDislike />
+                        Dislike
+                      </Button>
+                      <Button
+                        isSelected={isSaved}
+                        isDark={isDark}
+                        type="button"
+                        onClick={() =>
+                          this.onChangeSave(
+                            decreaseSavedItem,
+                            addSavedItem,
+                            saved,
+                          )
+                        }
+                      >
+                        <RiPlayListAddFill />
+                        <p>{isSaved ? 'saved' : 'save'}</p>
+                      </Button>
+                    </LikesContainer>
+                  </ViewsAndLikesContainer>
+                  <hr />
+                  <ChannelContainer isDark={isDark}>
+                    <img src={channel.profileImageUrl} alt="channel logo" />
+                    <div>
+                      <p>{channel.name}</p>
+                      <p>{`${channel.subscriberCount} subscribers`}</p>
+                    </div>
+                  </ChannelContainer>
+                  <p>{description}</p>
+                </VideosListContainer>
+                <RecommendedVideos>
+                  <RecommentedVideo />
+                </RecommendedVideos>
+              </>
             )
           }}
         </Theme.Consumer>
@@ -275,7 +313,7 @@ class VideoItemDetail extends Component {
     return (
       <Theme.Consumer>
         {value => {
-          const {isDark, saved} = value
+          const {isDark, saved, liked, disliked} = value
           return (
             <MainContainer>
               <Header />
@@ -283,7 +321,7 @@ class VideoItemDetail extends Component {
               <Container isDark={isDark} data-testid="videoItemDetails">
                 {status === dataStatus.inPrograss
                   ? this.renderLoader()
-                  : this.renderVideoDetail(saved)}
+                  : this.renderVideoDetail(saved, liked, disliked)}
               </Container>
             </MainContainer>
           )

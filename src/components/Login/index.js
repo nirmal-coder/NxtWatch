@@ -47,7 +47,6 @@ class Login extends Component {
 
     const response = await fetch(url, options)
     const data = await response.json()
-    console.log(data)
     if (response.ok) {
       const jwtToken = data.jwt_token
       Cookies.set('jwt_token', jwtToken, {expires: 10})
@@ -89,7 +88,7 @@ class Login extends Component {
                   <br />
                   <input
                     type="text"
-                    placeholder="Username"
+                    placeholder="rahul"
                     id="username"
                     onChange={this.onChangeInput}
                     value={username}
@@ -101,7 +100,7 @@ class Login extends Component {
                   <br />
                   <input
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="Password"
+                    placeholder="rahul@2021"
                     id="password"
                     onChange={this.onChangeInput}
                     value={password}

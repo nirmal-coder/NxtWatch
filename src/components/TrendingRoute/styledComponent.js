@@ -30,7 +30,7 @@ export const VideosListContainer = styled.ul`
   width: 100%;
   min-height: 85vh;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   flex-wrap: wrap;
   padding-left: 0px;
 `

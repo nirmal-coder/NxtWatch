@@ -9,6 +9,9 @@ const primaryColorDark = '#f8fafc'
 const secondaryColorLight = '#475569'
 const secondaryColorDark = '#64748b'
 
+const textColorDark = '#f1f5f9'
+const textColorlight = ' #181818'
+
 export const MainContainer = styled.div`
   position: relative;
   display: flex;
@@ -26,9 +29,10 @@ export const Container = styled.div`
   background-color: ${props => (props.isDark ? bgColorDark : bgColorLight)};
   margin-top: 60px;
   @media screen and (min-width: 768px) {
-    width: 80%;
     margin-left: 20%;
-    padding: 20px 50px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
   }
 `
 
@@ -38,7 +42,7 @@ export const LoaderContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100vw;
-  min-height: 85vh;
+  min-height: 100vh;
 `
 
 export const VideosListContainer = styled.div`
@@ -49,20 +53,14 @@ export const VideosListContainer = styled.div`
   align-items: center;
   padding: 15px;
   min-height: 85vh;
-  h1 {
-    font-size: 16px;
-    color: ${props => (props.isDark ? primaryColorDark : primaryColorLight)};
-    align-self: flex-start;
-    @media screen and (min-width: 768px) {
-      font-size: 32px;
-    }
-  }
-  p {
-    color: ${props =>
-      props.isDark ? secondaryColorDark : secondaryColorLight};
-  }
+
   hr {
-    width: 100%;
+    width: 110%;
+  }
+  @media screen and (min-width: 768px) {
+    width: 60%;
+    padding-left: 15px;
+    align-items: flex-start;
   }
 `
 export const FailureFetchContainer = styled.div`
@@ -99,8 +97,8 @@ export const VideoPlayerContainer = styled.div`
   width: 90vw;
   height: calc((90vw / 16) * 9);
   @media screen and (min-width: 768px) {
-    width: 60vw;
-    height: calc((60vw / 16) * 8);
+    width: 50vw;
+    height: calc((50vw / 16) * 9);
   }
 `
 export const ViewsAndLikesContainer = styled.div`
@@ -181,5 +179,18 @@ export const ChannelContainer = styled.div`
     color: ${props =>
       props.isDark ? secondaryColorDark : secondaryColorLight};
     margin-top: -20px;
+  }
+`
+export const Title = styled.p`
+  color: ${props => (props.isDark ? textColorDark : textColorlight)};
+  font-size: 22px;
+  font-weight: 500;
+  align-self: flex-start;
+`
+export const RecommendedVideos = styled.div`
+  width: 100%;
+  min-height: 100vh;
+  @media screen and (min-width: 768px) {
+    width: 30%;
   }
 `

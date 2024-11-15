@@ -6,6 +6,12 @@ const Theme = React.createContext({
   saved: [],
   addSavedItem: () => {},
   decreaseSavedItem: () => {},
+  liked: [],
+  addLiked: () => {},
+  removeLiked: () => {},
+  disliked: [],
+  addDisliked: () => {},
+  removeDisliked: () => {},
 })
 
 export default Theme

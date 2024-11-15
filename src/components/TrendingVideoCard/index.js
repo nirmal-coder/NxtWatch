@@ -6,6 +6,7 @@ import {
   ThumbnailImg,
   ChannelDetails,
   ViewsContainer,
+  Title,
 } from './styledComponent'
 
 const TrendingVideoCard = props => {
@@ -27,7 +28,7 @@ const TrendingVideoCard = props => {
               <ChannelDetails isDark={isDark}>
                 <img src={channel.profileImageUrl} alt={channel.name} />
                 <div>
-                  <p>{title}</p>
+                  <Title isDark={isDark}>{title}</Title>
                   <p>{channel.name}</p>
                   <ViewsContainer>
                     <p>{`${viewCount} views`}</p>
