@@ -20,6 +20,7 @@ import {
   Title,
   ChannelContainer,
   RecommendedVideos,
+  Description,
 } from './styledComponent'
 
 import Theme from '../../context'
@@ -268,7 +269,7 @@ class VideoItemDetail extends Component {
                       <p>{`${channel.subscriberCount} subscribers`}</p>
                     </div>
                   </ChannelContainer>
-                  <p>{description}</p>
+                  <Description isDark={isDark}>{description}</Description>
                 </VideosListContainer>
                 <RecommendedVideos>
                   <RecommentedVideo />

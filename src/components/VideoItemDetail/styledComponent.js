@@ -178,7 +178,7 @@ export const ChannelContainer = styled.div`
   p:nth-of-type(2) {
     color: ${props =>
       props.isDark ? secondaryColorDark : secondaryColorLight};
-    margin-top: -20px;
+    margin-top: -10px;
   }
 `
 export const Title = styled.p`
@@ -193,4 +193,7 @@ export const RecommendedVideos = styled.div`
   @media screen and (min-width: 768px) {
     width: 30%;
   }
+`
+export const Description = styled.p`
+  color: ${props => (props.isDark ? secondaryColorDark : secondaryColorLight)};
 `
